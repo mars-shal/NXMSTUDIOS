@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project — Alex Mercer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='42' fill='%2316140f'/></svg>">
+</head>
+<body>
+
+  <header class="nav">
+    <a class="nav-id" href="index.html">
+      <img src="images/photos/2026-11-24_012.jpg" alt="Alex Mercer" style="object-position:50% 18%">
+      <span>Alex Mercer</span>
+    </a>
+    <nav class="menu">
+      <ul>
+        <li><a href="projects.html" aria-current="page"><span>01</span>Projects</a></li>
+        <li><a href="gallery.html"><span>02</span>Gallery</a></li>
+        <li><a href="about.html"><span>03</span>About</a></li>
+        <li><a href="contact.html"><span>04</span>Contact</a></li>
+      </ul>
+    </nav>
+    <button class="menu-btn">Menu</button>
+  </header>
+
+  <main data-project-detail data-lb-group="pd">
+    <section class="pd-head">
+      <span class="eyebrow" data-pd-category>Project</span>
+      <h1 data-pd-title>Project title</h1>
+      <div class="pd-meta">
+        <div><span class="eyebrow">Year</span><div data-pd-year>2026</div></div>
+        <div><span class="eyebrow">Category</span><div data-pd-category2>Photography</div></div>
+        <div><span class="eyebrow">Deliverable</span><div data-pd-count>0 photographs</div></div>
+      </div>
+      <p style="color:var(--muted);max-width:34rem;margin-top:2rem" data-pd-desc></p>
+      <div class="tag-row" data-pd-tags style="margin-top:1.6rem"></div>
+    </section>
+
+    <section class="pd-gallery">
+      <img class="landscape" data-pd-hero src="" alt="Project hero photograph" data-cursor="view">
+      <!-- remaining images rendered by JS -->
+      <div data-pd-gallery style="display:contents"></div>
+    </section>
+
+    <nav class="pd-nav">
+      <a data-pd-prev href="projects.html"><span style="font-size:.7rem;font-family:var(--font-body);letter-spacing:.16em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:.4rem">← Previous</span><span>Project</span></a>
+      <a href="projects.html" style="font-size:.75rem;font-family:var(--font-body);letter-spacing:.16em;text-transform:uppercase">All projects</a>
+      <a data-pd-next href="projects.html" style="text-align:right"><span style="font-size:.7rem;font-family:var(--font-body);letter-spacing:.16em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:.4rem">Next →</span><span>Project</span></a>
+    </nav>
+  </main>
+
+  <footer class="footer">
+    <nav class="pill-list footer-socials">
+      <a href="#"><span class="num">Ig</span><span>Instagram</span></a>
+      <a href="#"><span class="num">X</span><span>X (Twitter)</span></a>
+      <a href="#"><span class="num">Bē</span><span>Behance</span></a>
+    </nav>
+    <div class="accent-bar">© 2026 Alex Mercer. All rights reserved.</div>
+  </footer>
+
+  <script src="https://unpkg.com/lenis@1/dist/lenis.min.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    // fill the duplicated category slot in the meta row
+    (function () {
+      const c = document.querySelector("[data-pd-category2]");
+      const src = document.querySelector("[data-pd-category]");
+      const apply = () => { if (src.textContent && src.textContent !== "Project") c.textContent = src.textContent; };
+      const mo = new MutationObserver(apply);
+      mo.observe(src, { childList: true, characterData: true, subtree: true });
+    })();
+  </script>
+</body>
+</html>

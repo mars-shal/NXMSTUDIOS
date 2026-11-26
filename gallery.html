@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gallery — Alex Mercer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='42' fill='%2316140f'/></svg>">
+</head>
+<body>
+
+  <header class="nav">
+    <a class="nav-id" href="index.html">
+      <img src="images/photos/2026-11-24_012.jpg" alt="Alex Mercer" style="object-position:50% 18%">
+      <span>Alex Mercer</span>
+    </a>
+    <nav class="menu">
+      <ul>
+        <li><a href="projects.html"><span>01</span>Projects</a></li>
+        <li><a href="gallery.html" aria-current="page"><span>02</span>Gallery</a></li>
+        <li><a href="about.html"><span>03</span>About</a></li>
+        <li><a href="contact.html"><span>04</span>Contact</a></li>
+      </ul>
+    </nav>
+    <button class="menu-btn">Menu</button>
+  </header>
+
+  <main>
+    <section class="page-head">
+      <span class="eyebrow">02 — Frames</span>
+      <h1>The <span class="italic">gallery</span></h1>
+      <p>A rolling feed of favorite frames — outtakes, personal work and client picks. Click any image to view full size.</p>
+    </section>
+
+    <section class="section" style="padding-bottom: 2.5rem">
+      <div class="section-head reveal" style="margin-bottom: 2rem">
+        <div>
+          <span class="eyebrow">Motion</span>
+          <h2>Film &amp; clips</h2>
+        </div>
+        <span class="eyebrow" style="margin-bottom:.5rem">Videos from the field</span>
+      </div>
+      <div class="video-grid" id="video-grid"></div>
+    </section>
+
+    <section class="bento-grid" data-lightbox="gallery" id="gallery-grid">
+      <!-- figures rendered by JS from js/data.js -->
+    </section>
+  </main>
+
+  <footer class="footer">
+    <nav class="pill-list footer-socials">
+      <a href="#"><span class="num">Ig</span><span>Instagram</span></a>
+      <a href="#"><span class="num">X</span><span>X (Twitter)</span></a>
+      <a href="#"><span class="num">Bē</span><span>Behance</span></a>
+    </nav>
+    <div class="accent-bar">© 2026 Alex Mercer. All rights reserved.</div>
+  </footer>
+
+  <script src="https://unpkg.com/lenis@1/dist/lenis.min.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    (function () {
+      const vg = document.getElementById("video-grid");
+      if (typeof VIDEOS !== "undefined") {
+        vg.innerHTML = VIDEOS.map((v) => `
+          <figure class="frame video-card">
+            <video src="${v.file}" poster="${v.poster}" controls playsinline preload="metadata"></video>
+            <figcaption>${v.date}</figcaption>
+          </figure>
+        `).join("");
+      }
+      const meta = typeof IMG_META !== "undefined" ? IMG_META : {};
+      const grid = document.getElementById("gallery-grid");
+      grid.innerHTML = GALLERY.map((g) => {
+        const m = meta[g.src];
+        const ratio = m && m[0] ? ` style="aspect-ratio:${m[0]} / ${m[1]}"` : ' style="aspect-ratio:4 / 5"';
+        return `
+        <figure data-cursor="view"${ratio}>
+          <img src="${g.src}" alt="${g.project}" loading="lazy">
+          <figcaption>${g.project}</figcaption>
+        </figure>`;
+      }).join("");
+      window.__imgFade && window.__imgFade(grid);
+      window.__bindLightbox && window.__bindLightbox(grid);
+      window.__cursorBind && window.__cursorBind();
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact — Alex Mercer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='42' fill='%23e0361e'/></svg>">
+</head>
+<body>
+
+  <header class="nav">
+    <a class="nav-id" href="index.html">
+      <img src="images/photos/2026-11-24_012.jpg" alt="Alex Mercer" style="object-position:50% 18%">
+      <span>Alex Mercer</span>
+    </a>
+    <nav class="menu">
+      <ul>
+        <li><a href="projects.html"><span>01</span>Projects</a></li>
+        <li><a href="gallery.html"><span>02</span>Gallery</a></li>
+        <li><a href="about.html"><span>03</span>About</a></li>
+        <li><a href="contact.html" aria-current="page"><span>04</span>Contact</a></li>
+      </ul>
+    </nav>
+    <button class="menu-btn">Menu</button>
+  </header>
+
+  <main>
+    <section class="page-head">
+      <span class="eyebrow">04 — Say hello</span>
+      <h1>Let's <span class="italic">talk.</span></h1>
+      <p>Tell me about your day, your brand, or the idea you can't stop thinking about. I reply within 48 hours.</p>
+    </section>
+
+    <div class="bc-wrap reveal">
+      <div class="bc-media">
+        <img src="images/photos/2026-11-24_017.jpg" alt="Alex Mercer — event portrait" loading="lazy">
+        <div class="bc-overlay">
+          <h2>Let's make something amazing together. I'd love to hear about your ideas.</h2>
+          <div class="bc-contacts">
+            <a href="tel:+10001234567">(000) 123-4567</a>
+            <span class="dash"></span>
+            <a href="mailto:hello@alexmercer.photo">hello@alexmercer.photo</a>
+          </div>
+        </div>
+      </div>
+      <form class="bc-form" onsubmit="event.preventDefault(); this.querySelector('.bc-submit').textContent='Sent — talk soon! ✓';">
+        <div class="fgroup">
+          <label for="name">Name</label>
+          <input id="name" name="name" type="text" placeholder="Your name" required>
+        </div>
+        <div class="fgroup">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" placeholder="you@email.com" required>
+        </div>
+        <div class="fgroup">
+          <label for="type">What do you need?</label>
+          <select id="type" name="type" style="background:var(--field);border:1px solid transparent;border-radius:12px;padding:.95rem 1.15rem;font-family:var(--font-body);font-size:.95rem;color:var(--ink);outline:none">
+            <option>Wedding / Event</option>
+            <option>Portrait / Lifestyle</option>
+            <option>Brand / Editorial</option>
+            <option>Commercial / Architecture</option>
+            <option>Something else</option>
+          </select>
+        </div>
+        <div class="fgroup">
+          <label for="msg">Message</label>
+          <textarea id="msg" name="msg" rows="4" placeholder="The story, the vibe, the location…"></textarea>
+        </div>
+        <button class="bc-submit" type="submit">Submit</button>
+        <div class="contact-info-cards">
+          <a href="mailto:hello@alexmercer.photo"><span>Email</span><span>hello@alexmercer.photo</span></a>
+          <a href="tel:+10001234567"><span>Phone</span><span>(000) 123-4567</span></a>
+          <a><span>Studio</span><span>Los Angeles, CA — by appointment</span></a>
+          <a><span>Response</span><span>Within 48 hours</span></a>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <nav class="pill-list footer-socials">
+      <a href="#"><span class="num">Ig</span><span>Instagram</span></a>
+      <a href="#"><span class="num">X</span><span>X (Twitter)</span></a>
+      <a href="#"><span class="num">Bē</span><span>Behance</span></a>
+    </nav>
+    <div class="accent-bar">© 2026 Alex Mercer. All rights reserved.</div>
+  </footer>
+
+  <script src="https://unpkg.com/lenis@1/dist/lenis.min.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

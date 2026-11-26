@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projects — Alex Mercer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='42' fill='%2316140f'/></svg>">
+</head>
+<body>
+
+  <header class="nav">
+    <a class="nav-id" href="index.html">
+      <img src="images/photos/2026-11-24_012.jpg" alt="Alex Mercer" style="object-position:50% 18%">
+      <span>Alex Mercer</span>
+    </a>
+    <nav class="menu">
+      <ul>
+        <li><a href="projects.html" aria-current="page"><span>01</span>Projects</a></li>
+        <li><a href="gallery.html"><span>02</span>Gallery</a></li>
+        <li><a href="about.html"><span>03</span>About</a></li>
+        <li><a href="contact.html"><span>04</span>Contact</a></li>
+      </ul>
+    </nav>
+    <button class="menu-btn">Menu</button>
+  </header>
+
+  <main>
+    <section class="page-head">
+      <span class="eyebrow">01 — Archive</span>
+      <h1>Selected<br><span class="italic">projects</span></h1>
+      <p>A collection of client work and personal series — weddings, portraits, editorial and everything in between.</p>
+    </section>
+
+    <section class="proj-list" id="project-list">
+      <!-- rows rendered by JS from js/data.js -->
+    </section>
+  </main>
+
+  <footer class="footer">
+    <nav class="pill-list footer-socials">
+      <a href="#"><span class="num">Ig</span><span>Instagram</span></a>
+      <a href="#"><span class="num">X</span><span>X (Twitter)</span></a>
+      <a href="#"><span class="num">Bē</span><span>Behance</span></a>
+    </nav>
+    <div class="accent-bar">© 2026 Alex Mercer. All rights reserved.</div>
+  </footer>
+
+  <script src="https://unpkg.com/lenis@1/dist/lenis.min.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    // render project rows from data
+    (function () {
+      const list = document.getElementById("project-list");
+      list.innerHTML = PROJECTS.map((p, i) => `
+        <a class="proj-row reveal" href="project.html?id=${p.id}" data-id="${p.id}">
+          <span class="idx">${String(i + 1).padStart(2, "0")}</span>
+          <h3>${p.title}</h3>
+          <span class="cat">${p.category}</span>
+          <span class="year">${p.year}</span>
+        </a>
+      `).join("");
+      // re-observe reveals for dynamically added rows
+      const io = new IntersectionObserver(
+        (entries) => entries.forEach((e) => e.isIntersecting && e.target.classList.add("in")),
+        { threshold: 0.1 }
+      );
+      list.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+      window.__cursorBind && window.__cursorBind();
+    })();
+  </script>
+</body>
+</html>
