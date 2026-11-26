@@ -281,7 +281,7 @@ window.__imgFade();
   const next = PROJECTS[(idx + 1) % PROJECTS.length];
   const prev = PROJECTS[(idx - 1 + PROJECTS.length) % PROJECTS.length];
 
-  document.title = `${p.title} — Alex Mercer`;
+  document.title = `${p.title} — NXM STUDIO`;
 
   root.querySelector("[data-pd-title]").textContent = p.title;
   root.querySelector("[data-pd-desc]").textContent = p.description;

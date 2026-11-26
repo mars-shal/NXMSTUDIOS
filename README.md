@@ -1,4 +1,4 @@
-# Alex Mercer — Photographer Portfolio
+# NXM STUDIO — Photographer Portfolio
 
 A static, no-build-step portfolio website blending the **Lens** (Framer) structure
 with the **editorial minimal** styling of justinle.xyz.
@@ -41,7 +41,7 @@ Everything is wired from **`js/data.js`**:
 
 Also update:
 
-- **Name/branding** — search for "Alex Mercer" across the HTML files and replace.
+- **Name/branding** — search for "NXM STUDIO" across the HTML files and replace.
 - **Contact details** — email/phone in each footer and in `contact.html`.
 - **Social links** — the `href="#"` links in the footers.
 
