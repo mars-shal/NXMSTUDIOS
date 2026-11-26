@@ -955,13 +955,14 @@ a { color: inherit; text-decoration: none; }
 
 .preloader.exit { transform: translateY(-101%); }
 
-.pl-name {
-  font-size: clamp(2.2rem, 6.5vw, 5.4rem);
-  letter-spacing: 0.01em;
+.pl-logo {
+  display: block;
+  width: clamp(200px, 30vw, 380px);
+  height: auto;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
   animation: plIn 0.9s var(--ease) both;
 }
-
-.pl-name .pl-accent { color: var(--accent); font-style: italic; }
 
 @keyframes plIn {
   from { opacity: 0; transform: translateY(24px); }

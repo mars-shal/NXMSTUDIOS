@@ -3,7 +3,7 @@
    overlay menu, reveals, lightbox, renderers
    ============================================================ */
 
-/* ---------- preloader (Landonorris-style counter) ---------- */
+/* ---------- preloader (Landonorris-style counter, pixelated NXM) ---------- */
 (function () {
   const pl = document.querySelector(".preloader");
   if (!pl) return;
@@ -12,6 +12,37 @@
   const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const DUR = reduced ? 0 : 1500;
   const start = performance.now();
+
+  // draw "NXM" tiny, then blow it up with smoothing off = pixel letters
+  function drawLogo() {
+    const cv = pl.querySelector(".pl-logo");
+    if (!cv) return;
+    const sm = document.createElement("canvas");
+    const sctx = sm.getContext("2d");
+    sctx.font = '600 16px Inter, system-ui, sans-serif';
+    const wN = sctx.measureText("N").width;
+    const wX = sctx.measureText("X").width;
+    const wM = sctx.measureText("M").width;
+    const gap = 2;
+    sm.width = Math.ceil(wN + wX + wM + gap * 2) + 2;
+    sm.height = 20;
+    sctx.font = '600 16px Inter, system-ui, sans-serif'; // reset by resize
+    sctx.textBaseline = "alphabetic";
+    const y = 16;
+    let x = 1;
+    sctx.fillStyle = "#f2f1ea";
+    sctx.fillText("N", x, y); x += wN + gap;
+    sctx.fillStyle = "#e0361e";
+    sctx.fillText("X", x, y); x += wX + gap;
+    sctx.fillStyle = "#f2f1ea";
+    sctx.fillText("M", x, y);
+    const S = 12; // pixel block size
+    cv.width = sm.width * S;
+    cv.height = sm.height * S;
+    const dctx = cv.getContext("2d");
+    dctx.imageSmoothingEnabled = false;
+    dctx.drawImage(sm, 0, 0, cv.width, cv.height);
+  }
 
   function tick(now) {
     const t = Math.min((now - start) / DUR, 1);
@@ -32,8 +63,20 @@
     else setTimeout(go, 150);
   }
 
-  if (reduced) finish();
-  else requestAnimationFrame(tick);
+  // wait briefly for Inter so the pixel grid matches the real letterforms
+  const fontsReady = document.fonts && document.fonts.load
+    ? Promise.race([document.fonts.load('600 16px Inter'), new Promise((r) => setTimeout(r, 350))])
+    : Promise.resolve();
+
+  fontsReady.then(() => {
+    drawLogo();
+    if (reduced) finish();
+    else requestAnimationFrame(tick);
+  }).catch(() => {
+    drawLogo();
+    if (reduced) finish();
+    else requestAnimationFrame(tick);
+  });
 })();
 
 /* ---------- custom cursor ---------- */
