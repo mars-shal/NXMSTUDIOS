@@ -13,6 +13,13 @@
 </head>
 <body>
 
+  <div class="preloader" aria-hidden="true">
+    <div class="pl-name display">NXM <span class="pl-accent">STUDIO</span></div>
+    <div class="pl-bar"><span></span></div>
+    <div class="pl-count">000</div>
+  </div>
+
+
   <header class="nav">
     <a class="nav-id" href="index.html">
       <img src="images/photos/2026-11-24_012.jpg" alt="NXM STUDIO" style="object-position:50% 18%">
@@ -130,8 +137,6 @@
             <div class="banner-overlay">
               <span class="eyebrow">0${i + 1} / ${p.category}</span>
               <h3>${p.title} <sup>${p.year}</sup></h3>
-              <p>${p.description}</p>
-              <div class="tag-row">${p.tags.map((t) => `<span class="tag">${t}</span>`).join("")}</div>
               <span class="text-link">View gallery →</span>
             </div>
           </a>

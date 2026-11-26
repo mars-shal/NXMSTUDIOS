@@ -3,6 +3,39 @@
    overlay menu, reveals, lightbox, renderers
    ============================================================ */
 
+/* ---------- preloader (Landonorris-style counter) ---------- */
+(function () {
+  const pl = document.querySelector(".preloader");
+  if (!pl) return;
+  const num = pl.querySelector(".pl-count");
+  const bar = pl.querySelector(".pl-bar span");
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const DUR = reduced ? 0 : 1500;
+  const start = performance.now();
+
+  function tick(now) {
+    const t = Math.min((now - start) / DUR, 1);
+    const eased = 1 - Math.pow(1 - t, 2.4);
+    num.textContent = String(Math.floor(eased * 100)).padStart(3, "0");
+    if (bar) bar.style.transform = `scaleX(${eased})`;
+    if (t < 1) return requestAnimationFrame(tick);
+    finish();
+  }
+
+  function finish() {
+    // don't hold the page hostage — reveal on count end or shortly after
+    const go = () => {
+      pl.classList.add("exit");
+      setTimeout(() => pl.remove(), 900);
+    };
+    if (document.readyState === "complete" || reduced) go();
+    else setTimeout(go, 150);
+  }
+
+  if (reduced) finish();
+  else requestAnimationFrame(tick);
+})();
+
 /* ---------- custom cursor ---------- */
 (function () {
   const dot = document.createElement("div");
