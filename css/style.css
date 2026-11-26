@@ -15,7 +15,7 @@
   --accent-ink: #fff6f0;
 
   --font-display: "Fraunces", "Georgia", serif;
-  --font-body: "Inter", "Helvetica Neue", sans-serif;
+  --font-body: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Inter", "Helvetica Neue", sans-serif;
 
   --pad: clamp(1.25rem, 4vw, 4rem);
   --r: 22px;
@@ -957,7 +957,7 @@ a { color: inherit; text-decoration: none; }
 
 .pl-logo {
   display: block;
-  width: clamp(200px, 30vw, 380px);
+  width: clamp(240px, 32vw, 400px);
   height: auto;
   image-rendering: pixelated;
   image-rendering: crisp-edges;

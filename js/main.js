@@ -13,35 +13,51 @@
   const DUR = reduced ? 0 : 1500;
   const start = performance.now();
 
-  // draw "NXM" tiny, then blow it up with smoothing off = pixel letters
+  // draw "NXM" hi-res, then sample it into a block grid = crisp pixel letters
   function drawLogo() {
     const cv = pl.querySelector(".pl-logo");
     if (!cv) return;
-    const sm = document.createElement("canvas");
-    const sctx = sm.getContext("2d");
-    sctx.font = '600 16px Inter, system-ui, sans-serif';
-    const wN = sctx.measureText("N").width;
-    const wX = sctx.measureText("X").width;
-    const wM = sctx.measureText("M").width;
-    const gap = 2;
-    sm.width = Math.ceil(wN + wX + wM + gap * 2) + 2;
-    sm.height = 20;
-    sctx.font = '600 16px Inter, system-ui, sans-serif'; // reset by resize
-    sctx.textBaseline = "alphabetic";
-    const y = 16;
-    let x = 1;
-    sctx.fillStyle = "#f2f1ea";
-    sctx.fillText("N", x, y); x += wN + gap;
-    sctx.fillStyle = "#e0361e";
-    sctx.fillText("X", x, y); x += wX + gap;
-    sctx.fillStyle = "#f2f1ea";
-    sctx.fillText("M", x, y);
-    const S = 12; // pixel block size
-    cv.width = sm.width * S;
-    cv.height = sm.height * S;
+    const fontStack = '600 64px "SF Pro Display", -apple-system, BlinkMacSystemFont, "Inter", system-ui, sans-serif';
+    const off = document.createElement("canvas");
+    const octx = off.getContext("2d");
+    octx.font = fontStack;
+    const wN = octx.measureText("N").width;
+    const wX = octx.measureText("X").width;
+    const wM = octx.measureText("M").width;
+    const gap = 10;
+    const W = Math.ceil(wN + wX + wM + gap * 2) + 4;
+    const H = 90;
+    off.width = W; off.height = H;
+    octx.font = fontStack; // reset by resize
+    octx.textBaseline = "alphabetic";
+    const y = 74;
+    let x = 2;
+    octx.fillStyle = "#f2f1ea";
+    octx.fillText("N", x, y); x += wN + gap;
+    octx.fillStyle = "#e0361e";
+    octx.fillText("X", x, y); x += wX + gap;
+    octx.fillStyle = "#f2f1ea";
+    octx.fillText("M", x, y);
+
+    // sample into a block grid
+    const B = 6; // source pixels per block
+    const cols = Math.floor(W / B);
+    const rows = Math.floor(H / B);
+    const data = octx.getImageData(0, 0, W, H).data;
+    cv.width = cols;
+    cv.height = rows;
     const dctx = cv.getContext("2d");
-    dctx.imageSmoothingEnabled = false;
-    dctx.drawImage(sm, 0, 0, cv.width, cv.height);
+    for (let cy = 0; cy < rows; cy++) {
+      for (let cx = 0; cx < cols; cx++) {
+        const px = cx * B + (B >> 1), py = cy * B + (B >> 1);
+        const i = (py * W + px) * 4;
+        const a = data[i + 3];
+        if (a > 48) {
+          dctx.fillStyle = `rgba(${data[i]},${data[i + 1]},${data[i + 2]},${(a / 255).toFixed(2)})`;
+          dctx.fillRect(cx, cy, 1, 1);
+        }
+      }
+    }
   }
 
   function tick(now) {
@@ -63,9 +79,9 @@
     else setTimeout(go, 150);
   }
 
-  // wait briefly for Inter so the pixel grid matches the real letterforms
+  // wait briefly for the display font so the pixel grid matches the letterforms
   const fontsReady = document.fonts && document.fonts.load
-    ? Promise.race([document.fonts.load('600 16px Inter'), new Promise((r) => setTimeout(r, 350))])
+    ? Promise.race([document.fonts.load('600 64px Inter'), new Promise((r) => setTimeout(r, 350))])
     : Promise.resolve();
 
   fontsReady.then(() => {
