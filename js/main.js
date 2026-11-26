@@ -13,7 +13,7 @@
   const DUR = reduced ? 0 : 1500;
   const start = performance.now();
 
-  // draw "NXM" hi-res, then sample it into a block grid = crisp pixel letters
+  // render "NXM" crisp and hi-res: N and M light, X in red
   function drawLogo() {
     const cv = pl.querySelector(".pl-logo");
     if (!cv) return;
@@ -27,37 +27,19 @@
     const gap = 10;
     const W = Math.ceil(wN + wX + wM + gap * 2) + 4;
     const H = 90;
-    off.width = W; off.height = H;
-    octx.font = fontStack; // reset by resize
-    octx.textBaseline = "alphabetic";
+    cv.width = W * 2; cv.height = H * 2;
+    const dctx = cv.getContext("2d");
+    dctx.scale(2, 2);
+    dctx.font = fontStack;
+    dctx.textBaseline = "alphabetic";
     const y = 74;
     let x = 2;
-    octx.fillStyle = "#f2f1ea";
-    octx.fillText("N", x, y); x += wN + gap;
-    octx.fillStyle = "#e0361e";
-    octx.fillText("X", x, y); x += wX + gap;
-    octx.fillStyle = "#f2f1ea";
-    octx.fillText("M", x, y);
-
-    // sample into a block grid
-    const B = 6; // source pixels per block
-    const cols = Math.floor(W / B);
-    const rows = Math.floor(H / B);
-    const data = octx.getImageData(0, 0, W, H).data;
-    cv.width = cols;
-    cv.height = rows;
-    const dctx = cv.getContext("2d");
-    for (let cy = 0; cy < rows; cy++) {
-      for (let cx = 0; cx < cols; cx++) {
-        const px = cx * B + (B >> 1), py = cy * B + (B >> 1);
-        const i = (py * W + px) * 4;
-        const a = data[i + 3];
-        if (a > 48) {
-          dctx.fillStyle = `rgba(${data[i]},${data[i + 1]},${data[i + 2]},${(a / 255).toFixed(2)})`;
-          dctx.fillRect(cx, cy, 1, 1);
-        }
-      }
-    }
+    dctx.fillStyle = "#f2f1ea";
+    dctx.fillText("N", x, y); x += wN + gap;
+    dctx.fillStyle = "#e0361e";
+    dctx.fillText("X", x, y); x += wX + gap;
+    dctx.fillStyle = "#f2f1ea";
+    dctx.fillText("M", x, y);
   }
 
   function tick(now) {
