@@ -13,35 +13,6 @@
   const DUR = reduced ? 0 : 1500;
   const start = performance.now();
 
-  // render "NXM" crisp and hi-res: N and M light, X in red
-  function drawLogo() {
-    const cv = pl.querySelector(".pl-logo");
-    if (!cv) return;
-    const fontStack = '600 64px "SF Pro Display", -apple-system, BlinkMacSystemFont, "Inter", system-ui, sans-serif';
-    const off = document.createElement("canvas");
-    const octx = off.getContext("2d");
-    octx.font = fontStack;
-    const wN = octx.measureText("N").width;
-    const wX = octx.measureText("X").width;
-    const wM = octx.measureText("M").width;
-    const gap = 10;
-    const W = Math.ceil(wN + wX + wM + gap * 2) + 4;
-    const H = 90;
-    cv.width = W * 2; cv.height = H * 2;
-    const dctx = cv.getContext("2d");
-    dctx.scale(2, 2);
-    dctx.font = fontStack;
-    dctx.textBaseline = "alphabetic";
-    const y = 74;
-    let x = 2;
-    dctx.fillStyle = "#f2f1ea";
-    dctx.fillText("N", x, y); x += wN + gap;
-    dctx.fillStyle = "#e0361e";
-    dctx.fillText("X", x, y); x += wX + gap;
-    dctx.fillStyle = "#f2f1ea";
-    dctx.fillText("M", x, y);
-  }
-
   function tick(now) {
     const t = Math.min((now - start) / DUR, 1);
     const eased = 1 - Math.pow(1 - t, 2.4);
@@ -61,20 +32,8 @@
     else setTimeout(go, 150);
   }
 
-  // wait briefly for the display font so the pixel grid matches the letterforms
-  const fontsReady = document.fonts && document.fonts.load
-    ? Promise.race([document.fonts.load('600 64px Inter'), new Promise((r) => setTimeout(r, 350))])
-    : Promise.resolve();
-
-  fontsReady.then(() => {
-    drawLogo();
-    if (reduced) finish();
-    else requestAnimationFrame(tick);
-  }).catch(() => {
-    drawLogo();
-    if (reduced) finish();
-    else requestAnimationFrame(tick);
-  });
+  if (reduced) finish();
+  else requestAnimationFrame(tick);
 })();
 
 /* ---------- custom cursor ---------- */
